@@ -26,10 +26,13 @@ function log(msg)
 }
 
 // Returns true iff `elem` is in `array`.
-function matchesAny(elem, array)
+function matchesAny(elem, array, match)
 {
+    if(match == undefined)
+        match = function(a, b) { return a == b; }
+
     for(x in array)
-        if(elem == array[x])
+        if(match(elem, array[x]))
             return true;
 
     return false;
