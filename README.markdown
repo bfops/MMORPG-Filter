@@ -2,8 +2,8 @@ This is a script to sort and filter games at [MMORPG.com's gamelist](http://www.
 
 Features:
 
- * Hides games still in development.
+ * Hides hardcoded game statuses.
  * Hides hardcoded genres.
- * Hides games which require payment to play.
  * Hides hardcoded game names.
+ * Hides games which require payment to play.
 

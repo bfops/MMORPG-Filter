@@ -14,6 +14,7 @@ if(unsafeWindow)
 
 // TODO: Put these in local storage.
 // TODO: Have an interface for changing these.
+var badStatuses = ["development"];
 var badGenres = ["historical", "real life", "sports"];
 var badNames = [];
 
@@ -51,9 +52,9 @@ function matchesHideCriteria(game)
     if(payImgs.length >= 3 && payImgs.eq(2).attr("src").indexOf("blank") == -1)
         return true;
 
-    // If the "status" column is undesirable.
+    // If the game's status is undesirable.
     var devImgs = cells.filter(".status.name.first").children("img");
-    if(devImgs.length >= 1 && devImgs.eq(0).attr("title") == "Development")
+    if(devImgs.length >= 1 && matchesAny(devImgs.eq(0).attr("title").toLowerCase(), badStatuses))
         return true;
 
     return false;
