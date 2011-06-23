@@ -132,7 +132,7 @@ function handleRow(row, filters)
     if(matchesHideCriteria(row, filters))
         row.hide();
     else if(matchesHighlightCriteria(row))
-        highlightText(row.children("td").eq(1).closest("a"));
+        highlightText(row.children("td").eq(1).find("a"));
 }
 
 // TODO: Clear out all unused filter elements (e.g. duplicate games).
