@@ -12,6 +12,8 @@ if(unsafeWindow)
     window = unsafeWindow;
 }
 
+// TODO: Put these in local storage.
+// TODO: Have an interface for changing these.
 var badGenres = ["Historical", "Real Life", "Sports"];
 var badNames = ["Fiesta Online"];
 
