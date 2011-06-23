@@ -135,7 +135,8 @@ function handleRow(row, filters)
         highlightText(row.children("td").eq(1).closest("a"));
 }
 
-function highlightGameList(filters)
+// TODO: Clear out all unused filter elements (e.g. duplicate games).
+function fixGameList(filters)
 {
     var games = $("#gamelisttable > tbody > tr");
 
@@ -154,7 +155,7 @@ $(document).ready(function()
         }
 
         var filters = new FilterSet(window.localStorage);
-        highlightGameList(filters);
+        fixGameList(filters);
     }
 );
 
