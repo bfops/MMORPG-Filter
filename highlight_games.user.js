@@ -95,7 +95,7 @@ function matchesAny(elem, array, match)
 // Check if `a` matches `b`, case insensitive.
 function stringMatch(a, b)
 {
-    return a.toLowerCase() == b.toLowerCase();
+    return a.substr(0, 26).toLowerCase() == b.substr(0, 26).toLowerCase();
 }
 
 function matchesHideCriteria(game, filters)
