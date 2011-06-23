@@ -144,6 +144,7 @@ function handleRow(row, filters)
 {
     var cells = row.children("td");
     var badColumns = filters.getBadColumns();
+
     for(var i = 0; i < badColumns.length; ++i)
         cells.eq(badColumns[i]).hide();
 
@@ -153,9 +154,24 @@ function handleRow(row, filters)
         highlightGame(row);
 }
 
+function hideBadColumnHeaders(filters)
+{
+    var rows = $("#gamelisttable > thead > tr");
+    var badColumns = filters.getBadColumns();
+
+    for(var i = 0; i < rows.length; ++i)
+    {
+        var cells = rows.eq(i).children("th");
+        for(var j = 0; j < badColumns.length; ++j)
+            cells.eq(badColumns[j]).hide();
+    }
+}
+
 // TODO: Clear out all unused filter elements (e.g. duplicate games).
 function fixGameList(filters)
 {
+    hideBadColumnHeaders(filters);
+
     var games = $("#gamelisttable > tbody > tr");
 
     for(var i = 0; i < games.length; ++i)
