@@ -132,9 +132,12 @@ function matchesHighlightCriteria(game)
     return true;
 }
 
-function highlightText(text)
+function highlightGame(game)
 {
-    text.css("font-weight", "bold");
+    game.css("font-weight", "bold");
+    var cells = game.children("td");
+    cells.css("color", "cyan");
+    cells.eq(1).children("a").css("color", "cyan");
 }
 
 function handleRow(row, filters)
@@ -147,7 +150,7 @@ function handleRow(row, filters)
     if(matchesHideCriteria(row, filters))
         row.hide();
     else if(matchesHighlightCriteria(row))
-        highlightText(row.children("td").eq(1).find("a"));
+        highlightGame(row);
 }
 
 // TODO: Clear out all unused filter elements (e.g. duplicate games).
