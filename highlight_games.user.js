@@ -27,8 +27,9 @@ function matchesHideCriteria(game)
     if(payImgs.length >= 3 && payImgs.eq(2).attr("src").indexOf("blank") == -1)
         return true;
 
+    // If the "status" column is undesirable.
     var devImgs = cells.filter(".status.name.first").children("img");
-    if(devImgs.length >= 1 && devImgs.eq(0).attr("lt") == "D")
+    if(devImgs.length >= 1 && devImgs.eq(0).attr("title") == "Development")
         return true;
 
     return false;
