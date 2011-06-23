@@ -13,6 +13,7 @@ if(unsafeWindow)
 }
 
 var badGenres = ["Historical", "Real Life", "Sports"];
+var badNames = ["Fiesta Online"];
 
 function log(msg)
 {
@@ -28,6 +29,12 @@ function matchesHideCriteria(game)
     var genre = cells.filter(".genre").html();
     for(badGenre in badGenres)
         if(badGenres[badGenre].toLowerCase() == genre.toLowerCase())
+            return true;
+
+    // If the name is undesirable;
+    var name = cells.find("a").html();
+    for(badName in badNames)
+        if(badNames[badName].toLowerCase() == name.toLowerCase())
             return true;
 
     // If there's something in the "subscription pay" column.
