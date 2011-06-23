@@ -14,13 +14,24 @@ if(unsafeWindow)
 
 // TODO: Put these in local storage.
 // TODO: Have an interface for changing these.
-var badGenres = ["Historical", "Real Life", "Sports"];
-var badNames = ["Fiesta Online"];
+var badGenres = ["historical", "real life", "sports"];
+var badNames = [];
 
+// Log `msg` to whatever logging facilities are available.
 function log(msg)
 {
     if(window.console) window.console.log(msg);
     if(GM_log) GM_log(msg);
+}
+
+// Returns true iff `elem` is in `array`.
+function matchesAny(elem, array)
+{
+    for(x in array)
+        if(elem == array[x])
+            return true;
+
+    return false;
 }
 
 function matchesHideCriteria(game)
@@ -28,16 +39,12 @@ function matchesHideCriteria(game)
     var cells = game.children("td");
 
     // If the genre is undesirable.
-    var genre = cells.filter(".genre").html();
-    for(badGenre in badGenres)
-        if(badGenres[badGenre].toLowerCase() == genre.toLowerCase())
-            return true;
+    if(matchesAny(cells.filter(".genre").html().toLowerCase(), badGenres))
+        return true;
 
     // If the name is undesirable;
-    var name = cells.find("a").html();
-    for(badName in badNames)
-        if(badNames[badName].toLowerCase() == name.toLowerCase())
-            return true;
+    if(matchesAny(cells.find("a").html().toLowerCase(), badNames))
+        return true;
 
     // If there's something in the "subscription pay" column.
     var payImgs = cells.filter(".pay.alt").children("img");
