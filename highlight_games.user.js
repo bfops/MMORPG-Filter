@@ -52,6 +52,10 @@ function highlightText(text)
 
 function handleRow(row)
 {
+    // If it's just a filler row, exit.
+    if(row.attr("id").substr(0, 6) != "glrow_")
+        return;
+
     if(matchesHideCriteria(row))
         row.hide();
     else if(matchesHighlightCriteria(row))
