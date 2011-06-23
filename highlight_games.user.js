@@ -129,7 +129,7 @@ function matchesHideCriteria(game, filters)
 
 function matchesHighlightCriteria(game)
 {
-    return true;
+    return false;
 }
 
 function highlightRow(row)
