@@ -14,9 +14,9 @@ if(unsafeWindow)
 
 // TODO: Put these in local storage.
 // TODO: Have an interface for changing these.
-var badStatuses = ["development"];
-var badGenres = ["historical", "real life", "sports"];
-var badNames = [];
+var badStatuses = ["Development"];
+var badGenres = ["Historical", "Real Life", "Sports"];
+var badNames = ["Deco Online"];
 
 // Log `msg` to whatever logging facilities are available.
 function log(msg)
@@ -38,16 +38,22 @@ function matchesAny(elem, array, match)
     return false;
 }
 
+// Check if `a` matches `b`, case insensitive.
+function stringMatch(a, b)
+{
+    return a.toLowerCase() == b.toLowerCase();
+}
+
 function matchesHideCriteria(game)
 {
     var cells = game.children("td");
 
     // If the genre is undesirable.
-    if(matchesAny(cells.filter(".genre").html().toLowerCase(), badGenres))
+    if(matchesAny(cells.filter(".genre").html().toLowerCase(), badGenres, stringMatch))
         return true;
 
     // If the name is undesirable;
-    if(matchesAny(cells.find("a").html().toLowerCase(), badNames))
+    if(matchesAny(cells.find("a").html().toLowerCase(), badNames, stringMatch))
         return true;
 
     // If there's something in the "subscription pay" column.
@@ -57,7 +63,7 @@ function matchesHideCriteria(game)
 
     // If the game's status is undesirable.
     var devImgs = cells.filter(".status.name.first").children("img");
-    if(devImgs.length >= 1 && matchesAny(devImgs.eq(0).attr("title").toLowerCase(), badStatuses))
+    if(devImgs.length >= 1 && matchesAny(devImgs.eq(0).attr("title").toLowerCase(), badStatuses, stringMatch))
         return true;
 
     return false;
