@@ -12,11 +12,55 @@ if(unsafeWindow)
     window = unsafeWindow;
 }
 
-// TODO: Put these in local storage.
-// TODO: Have an interface for changing these.
-var badStatuses = ["Development"];
-var badGenres = ["Historical", "Real Life", "Sports"];
-var badNames = ["Deco Online"];
+function FilterSet(storage)
+{
+    // TODO: Have an interface to settings these members.
+    
+    function getStorageArray(name)
+    {
+        var text = storage.getItem(name);
+
+        if(text)
+            return text.split(",");
+
+        return [];
+    }
+
+    function setStorageArray(name, array)
+    {
+        storage.setItem(name, array.toString());
+    }
+
+    this.getBadStatuses = function()
+    {
+        return getStorageArray("badStatuses");
+    }
+
+    this.setBadStatuses = function(badStatuses)
+    {
+        setStorageArray("badStatuses", badStatuses);
+    }
+
+    this.getBadGenres = function()
+    {
+        return getStorageArray("badGenres");
+    }
+
+    this.setBadGenres = function(badGenres)
+    {
+        setStorageArray("badGenres", badGenres);
+    }
+
+    this.getBadGames = function()
+    {
+        return getStorageArray("badGames");
+    }
+
+    this.setBadGames = function(badGames)
+    {
+        setStorageArray("badGames", badGames);
+    }
+}
 
 // Log `msg` to whatever logging facilities are available.
 function log(msg)
@@ -44,16 +88,16 @@ function stringMatch(a, b)
     return a.toLowerCase() == b.toLowerCase();
 }
 
-function matchesHideCriteria(game)
+function matchesHideCriteria(game, filters)
 {
     var cells = game.children("td");
 
     // If the genre is undesirable.
-    if(matchesAny(cells.filter(".genre").html().toLowerCase(), badGenres, stringMatch))
+    if(matchesAny(cells.filter(".genre").html().toLowerCase(), filters.getBadGenres(), stringMatch))
         return true;
 
     // If the name is undesirable;
-    if(matchesAny(cells.find("a").html().toLowerCase(), badNames, stringMatch))
+    if(matchesAny(cells.find("a").html().toLowerCase(), filters.getBadGames(), stringMatch))
         return true;
 
     // If there's something in the "subscription pay" column.
@@ -63,7 +107,7 @@ function matchesHideCriteria(game)
 
     // If the game's status is undesirable.
     var devImgs = cells.filter(".status.name.first").children("img");
-    if(devImgs.length >= 1 && matchesAny(devImgs.eq(0).attr("title").toLowerCase(), badStatuses, stringMatch))
+    if(devImgs.length >= 1 && matchesAny(devImgs.eq(0).attr("title").toLowerCase(), filters.getBadStatuses(), stringMatch))
         return true;
 
     return false;
@@ -79,25 +123,38 @@ function highlightText(text)
     text.css("font-weight", "bold");
 }
 
-function handleRow(row)
+function handleRow(row, filters)
 {
     // If it's just a filler row, exit.
     if(row.attr("id").substr(0, 6) != "glrow_")
         return;
 
-    if(matchesHideCriteria(row))
+    if(matchesHideCriteria(row, filters))
         row.hide();
     else if(matchesHighlightCriteria(row))
         highlightText(row.children("td").eq(1).closest("a"));
 }
 
-function highlightGameList()
+function highlightGameList(filters)
 {
     var games = $("#gamelisttable > tbody > tr");
 
     for(var i = 0; i < games.length; ++i)
-        handleRow(games.eq(i));
+        handleRow(games.eq(i), filters);
 }
 
-$(document).ready(highlightGameList);
+$(document).ready(function()
+    {
+        if(window.localStorage == undefined)
+        {
+            var error = "Error: Browser support for local storage is not enabled. Quitting.";
+            log(error);
+            alert(error);
+            return;
+        }
+
+        var filters = new FilterSet(window.localStorage);
+        highlightGameList(filters);
+    }
+);
 
