@@ -12,6 +12,8 @@ if(unsafeWindow)
     window = unsafeWindow;
 }
 
+var badGenres = ["Historical", "Real Life", "Sports"];
+
 function log(msg)
 {
     if(window.console) window.console.log(msg);
@@ -24,8 +26,9 @@ function matchesHideCriteria(game)
 
     // If the genre is undesirable.
     var genre = cells.filter(".genre").html();
-    if(genre == "Historical" || genre == "Real Life" || genre == "Sports")
-        return true;
+    for(badGenre in badGenres)
+        if(badGenres[badGenre].toLowerCase() == genre.toLowerCase())
+            return true;
 
     // If there's something in the "subscription pay" column.
     var payImgs = cells.filter(".pay.alt").children("img");
