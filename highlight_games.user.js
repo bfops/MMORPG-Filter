@@ -22,6 +22,11 @@ function matchesHideCriteria(game)
 {
     var cells = game.children("td");
 
+    // If the genre is undesirable.
+    var genre = cells.filter(".genre").html();
+    if(genre == "Historical" || genre == "Real Life" || genre == "Sports")
+        return true;
+
     // If there's something in the "subscription pay" column.
     var payImgs = cells.filter(".pay.alt").children("img");
     if(payImgs.length >= 3 && payImgs.eq(2).attr("src").indexOf("blank") == -1)

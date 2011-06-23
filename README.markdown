@@ -3,5 +3,6 @@ This is a script to sort and filter games at [MMORPG.com's gamelist](http://www.
 Features:
 
  * Hides games still in development.
+ * Hides historical, real-life, and sports genre games.
  * Hides games which require payment to play.
 
