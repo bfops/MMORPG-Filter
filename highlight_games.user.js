@@ -166,7 +166,8 @@ $(document).ready(function()
     {
         if(window.localStorage == undefined)
         {
-            var error = "Error: Browser support for local storage is not enabled. Quitting.";
+            // TODO: Just don't store in this case, but still allow the interface to be used.
+            var error = "Error: Browser support for HTML5 local storage is not enabled. Quitting.";
             log(error);
             alert(error);
             return;
