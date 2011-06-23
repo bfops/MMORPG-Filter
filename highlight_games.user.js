@@ -90,6 +90,10 @@ function stringMatch(a, b)
 
 function matchesHideCriteria(game, filters)
 {
+    // If it's just a filler row, not a game row.
+    if(game.attr("id").substr(0, 6) != "glrow_")
+        return true;
+
     var cells = game.children("td");
 
     // If the genre is undesirable.
@@ -125,10 +129,6 @@ function highlightText(text)
 
 function handleRow(row, filters)
 {
-    // If it's just a filler row, exit.
-    if(row.attr("id").substr(0, 6) != "glrow_")
-        return;
-
     if(matchesHideCriteria(row, filters))
         row.hide();
     else if(matchesHighlightCriteria(row))
