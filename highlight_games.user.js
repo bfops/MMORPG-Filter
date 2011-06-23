@@ -132,50 +132,44 @@ function matchesHighlightCriteria(game)
     return true;
 }
 
-function highlightGame(game)
+function highlightRow(row)
 {
-    game.css("font-weight", "bold");
-    var cells = game.children("td");
+    row.css("font-weight", "bold");
+    var cells = row.children("td");
     cells.css("color", "cyan");
     cells.eq(1).children("a").css("color", "cyan");
 }
 
-function handleRow(row, filters)
+// Hide all indices in JQuery collection `array` which are in `indices`.
+function hideIndices(array, indices)
 {
-    var cells = row.children("td");
-    var badColumns = filters.getBadColumns();
-
-    for(var i = 0; i < badColumns.length; ++i)
-        cells.eq(badColumns[i]).hide();
-
-    if(matchesHideCriteria(row, filters))
-        row.hide();
-    else if(matchesHighlightCriteria(row))
-        highlightGame(row);
-}
-
-function hideBadColumnHeaders(filters)
-{
-    var rows = $("#gamelisttable > thead > tr");
-    var badColumns = filters.getBadColumns();
-
-    for(var i = 0; i < rows.length; ++i)
-    {
-        var cells = rows.eq(i).children("th");
-        for(var j = 0; j < badColumns.length; ++j)
-            cells.eq(badColumns[j]).hide();
-    }
+    for(var i = 0; i < indices.length; ++i)
+        array.eq(indices[i]).hide();
 }
 
 // TODO: Clear out all unused filter elements (e.g. duplicate games).
 function fixGameList(filters)
 {
-    hideBadColumnHeaders(filters);
+    var badColumns = filters.getBadColumns();
+
+    hideIndices($("#gamelisttable > thead > tr > th"), badColumns);
 
     var games = $("#gamelisttable > tbody > tr");
 
     for(var i = 0; i < games.length; ++i)
-        handleRow(games.eq(i), filters);
+    {
+        var row = games.eq(i);
+
+        if(matchesHideCriteria(row, filters))
+            row.hide();
+        else
+        {
+            hideIndices(row.children("td"), badColumns);
+
+            if(matchesHighlightCriteria(row, filters))
+                highlightRow(row);
+        }
+    }
 }
 
 $(document).ready(function()
