@@ -60,6 +60,16 @@ function FilterSet(storage)
     {
         setStorageArray("badGames", badGames);
     }
+
+    this.getBadColumns = function()
+    {
+        return getStorageArray("badColumns");
+    }
+
+    this.setBadColumns = function(badColumns)
+    {
+        setStorageArray("badColumns", badColumns);
+    }
 }
 
 // Log `msg` to whatever logging facilities are available.
@@ -129,6 +139,11 @@ function highlightText(text)
 
 function handleRow(row, filters)
 {
+    var cells = row.children("td");
+    var badColumns = filters.getBadColumns();
+    for(var i = 0; i < badColumns.length; ++i)
+        cells.eq(badColumns[i]).hide();
+
     if(matchesHideCriteria(row, filters))
         row.hide();
     else if(matchesHighlightCriteria(row))
