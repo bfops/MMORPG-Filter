@@ -183,8 +183,7 @@ $(document).ready(function()
             return;
         }
 
-        var filters = new FilterSet(window.localStorage);
-        fixGameList(filters);
+        fixGameList(new FilterSet(window.localStorage));
     }
 );
 
