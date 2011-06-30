@@ -1,14 +1,12 @@
 // ==UserScript==
 // @name            Highlight games
 // @include         http://www.mmorpg.com/gamelist.cfm
-// @include         http://www.mmorpg.com/gamelist.cfm/*
+// @include         http://www.mmorpg.com/gamelist.cfm/show/*
 // ==/UserScript==
 
 if(unsafeWindow)
 {
     $ = unsafeWindow.$;
-    setInterval = unsafeWindow.setInterval;
-    clearInterval = unsafeWindow.clearInterval;
     window = unsafeWindow;
 }
 
@@ -127,7 +125,7 @@ function matchesHideCriteria(game, filters)
     return false;
 }
 
-function matchesHighlightCriteria(game)
+function matchesHighlightCriteria(game, filters)
 {
     return false;
 }
