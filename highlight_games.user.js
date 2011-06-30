@@ -39,6 +39,16 @@ function FilterSet(storage)
         setStorageArray("badStatuses", badStatuses);
     }
 
+    this.getGoodGames = function()
+    {
+        return getStorageArray("goodGames");
+    }
+
+    this.setGoodGames = function(goodGames)
+    {
+        setStorageArray("goodGames", goodGames);
+    }
+
     this.getBadGenres = function()
     {
         return getStorageArray("badGenres");
@@ -127,7 +137,8 @@ function matchesHideCriteria(game, filters)
 
 function matchesHighlightCriteria(game, filters)
 {
-    return false;
+    var name = game.children("td").eq(1).children("a").html();
+    return !matchesAny(name, filters.getGoodGames(), stringMatch);
 }
 
 function highlightRow(row)

@@ -7,4 +7,5 @@ Features:
  * Hides hardcoded game names.
  * Hides harcoded columns.
  * Hides games which require payment to play.
+ * Highlights hardcoded good games.
 
