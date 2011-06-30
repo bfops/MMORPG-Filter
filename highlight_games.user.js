@@ -1,7 +1,6 @@
 // ==UserScript==
 // @name            Highlight games
 // @include         http://www.mmorpg.com/gamelist.cfm
-// @include         http://www.mmorpg.com/gamelist.cfm/show/*
 // ==/UserScript==
 
 if(unsafeWindow)
