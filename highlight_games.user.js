@@ -9,6 +9,27 @@ if(unsafeWindow)
     window = unsafeWindow;
 }
 
+// Temporary storage of items, with the same interface as `window.localStorage`.
+function TempStorage()
+{
+    this.getItem = function(key)
+    {
+        return storedItems[key];
+    }
+
+    this.setItem = function(key, value)
+    {
+        storedItems[key] = value;
+    }
+
+    this.removeItem = function(key)
+    {
+        this.setItem(key, undefined);
+    }
+
+    var storedItems = {};
+}
+
 function FilterSet(storage)
 {
     // TODO: Have an interface to settings these members.
@@ -182,16 +203,17 @@ function fixGameList(filters)
 
 $(document).ready(function()
     {
+        var filters;
+
         if(window.localStorage == undefined)
         {
-            // TODO: Just don't store in this case, but still allow the interface to be used.
-            var error = "Error: Browser support for HTML5 local storage is not enabled. Quitting.";
-            log(error);
-            alert(error);
-            return;
+            log("Error: Browser support for HTML5 local storage is not enabled.");
+            filters = new FilterSet(new TemporaryStorage);
         }
+        else
+            filters = new FilterSet(window.localStorage);
 
-        fixGameList(new FilterSet(window.localStorage));
+        fixGameList(filters);
     }
 );
 
