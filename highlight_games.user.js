@@ -142,9 +142,9 @@ function matchesHideCriteria(game, filters)
     if(matchesAny(cells.find("a").html().toLowerCase(), filters.getBadGames(), stringMatch))
         return true;
 
-    // If there's something in the "subscription pay" column.
+    // If it's not marked as free.
     var payImgs = cells.filter(".pay.alt").children("img");
-    if(payImgs.length >= 3 && payImgs.eq(2).attr("src").indexOf("blank") == -1)
+    if(payImgs.length >= 1 && payImgs.eq(0).attr("src").indexOf("blank") != -1)
         return true;
 
     // If the game's status is undesirable.
