@@ -213,6 +213,11 @@ $(document).ready(function()
         else
             filters = new FilterSet(window.localStorage);
 
+        log("Loading bad games list: " + filters.getBadGames().sort());
+        log("Loading bad genres list: " + filters.getBadGenres().sort());
+        log("Loading bad statuses list: " + filters.getBadStatuses().sort());
+        log("Loading good games list: " + filters.getGoodGames().sort());
+
         fixGameList(filters);
     }
 );
