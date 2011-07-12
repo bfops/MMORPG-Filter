@@ -138,7 +138,7 @@ function matchesHideCriteria(game, filters)
     if(matchesAny(cells.filter(".genre").html().toLowerCase(), filters.getBadGenres(), stringMatch))
         return true;
 
-    // If the name is undesirable;
+    // If the name is undesirable.
     if(matchesAny(cells.find("a").html().toLowerCase(), filters.getBadGames(), stringMatch))
         return true;
 
