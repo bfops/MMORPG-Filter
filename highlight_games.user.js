@@ -1,6 +1,7 @@
 // ==UserScript==
-// @name            Highlight games
+// @name            MMORPG Game Filter
 // @include         http://www.mmorpg.com/gamelist.cfm
+// @description     Adds more filtering functionality to the MMORPG.com gamelist.
 // ==/UserScript==
 
 if(unsafeWindow)
